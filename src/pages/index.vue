@@ -80,8 +80,6 @@
 import { Component, Vue } from 'nuxt-property-decorator';
 import MarkerPanel from '~/components/MarkerPanel.vue';
 
-interface HTMLElementEvent<T extends HTMLElement> extends Event { target: T;}
-
 @Component({ components: { MarkerPanel } })
 export default class extends Vue {
   rotationX: number = 0;
