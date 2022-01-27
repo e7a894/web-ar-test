@@ -12,7 +12,7 @@
     "@nuxt/typescript-runtime": "^0.2.10",
     "nuxt": "^2.10.2",
     "nuxt-property-decorator": "^2.5.0",
-    "three": "^0.125.0"
+    "three": "^0.137.0"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^0.3.10",
