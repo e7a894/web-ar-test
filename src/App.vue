@@ -11,7 +11,7 @@ let customFileUrl = ref('');
 
 const vbMarkerPanel = reactive<MarkerPanelProps>(
   {
-    rotationX: 0,
+    rotationX: 1,
     rotationType: isRotated.value ? direction.value : 'none',
     rotationSpeed: 0.01,
     marker: marker.value
@@ -22,16 +22,19 @@ watch([isRotated, direction], () => {
   vbMarkerPanel.rotationType = isRotated.value ? direction.value : 'none';
 });
 
-watch(marker, () => {
-  vbMarkerPanel.marker = marker.value === 'custom' ? customFileUrl.value : marker.value;
-});
+watch(marker, () => setMarker());
 
 const selectFile = (e: Event) => {
   const target = e.target as HTMLInputElement;
-  if (target && target.files) {
-    marker.value = window.URL.createObjectURL(target.files[0]);
+  if (target?.files?.[0]) {
+    customFileUrl.value = window.URL.createObjectURL(target.files[0]);
+    setMarker();
   }
 }
+
+const setMarker = () => {
+  vbMarkerPanel.marker = marker.value === 'custom' ? customFileUrl.value : marker.value;
+};
 
 const clickReset = () => {
   isRotated.value = false;
@@ -40,28 +43,53 @@ const clickReset = () => {
 </script>
 
 <template>
-  <div>WebAR TEST</div>
-  <div>
-    <h3>Incline</h3>
-    <input type="range" v-model.number="vbMarkerPanel.rotationX" max="1" min="0" step="0.01" />
+  <h1>WebAR TEST</h1>
+  <div class="container">
+    <div class="parameters">
+      <div>
+        <h3>Incline</h3>
+        <input type="range" v-model.number="vbMarkerPanel.rotationX" max="1" min="0" step="0.01" />
+      </div>
+      <div>
+        <h3>Rotate</h3>
+        <div>
+          <label><input type="checkbox" v-model="isRotated" /></label>
+          <button @click="clickReset">Reset</button>
+        </div>
+        <div>
+          <label><input type="radio" v-model="direction" value="left" />Left</label>
+          <label><input type="radio" v-model="direction" value="right" />Right</label>
+        </div>
+        <label><input type="range" v-model.number="vbMarkerPanel.rotationSpeed" max="0.1" min="0.01"
+            step="0.001" /></label>
+      </div>
+      <div>
+        <h3>Marker</h3>
+        <div>
+          <label><input type="radio" v-model="marker" value="./images/hiro.png" />Hiro</label>
+          <label><input type="radio" v-model="marker" value="./images/kanji.png" />Kanji</label>
+          <label><input type="radio" v-model="marker" value="custom" />Custom (.png, .jpg)</label>
+        </div>
+        <label><input type="file" @change="selectFile" /></label>
+      </div>
+    </div>
+    <div class="marker">
+      <marker-panel ref="markerPanel" v-bind="vbMarkerPanel" />
+    </div>
   </div>
-  <div>
-    <h3>Rotate</h3>
-    <input type="checkbox" v-model="isRotated" />
-    <button @click="clickReset">Reset</button>
-    <input type="radio" v-model="direction" value="left" />
-    <input type="radio" v-model="direction" value="right" />
-    <input type="range" v-model.number="vbMarkerPanel.rotationSpeed" max="0.1" min="0.01" step="0.001" />
-  </div>
-  <div>
-    <h3>Marker</h3>
-    <input type="radio" v-model="marker" value="./images/hiro.png" />
-    <input type="radio" v-model="marker" value="./images/kanji.png" />
-    <input type="radio" v-model="marker" value="custom" />
-    <input type="file" @change="selectFile" />
-  </div>
-  <marker-panel ref="markerPanel" v-bind="vbMarkerPanel" />
 </template>
 
 <style scoped>
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.parameters {
+  flex: 1;
+}
+
+.marker {
+  flex: 1;
+}
 </style>
