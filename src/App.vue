@@ -41,19 +41,25 @@ const clickReset = () => {
 
 <template>
   <div>WebAR TEST</div>
-  <h3>Incline</h3>
-  <input type="range" v-model.number="vbMarkerPanel.rotationX" max="1" min="0" step="0.01" />
-  <h3>Rotate</h3>
-  <input type="checkbox" v-model="isRotated" />
-  <button @click="clickReset">Reset</button>
-  <input type="radio" v-model="direction" value="left" />
-  <input type="radio" v-model="direction" value="right" />
-  <input type="range" v-model.number="vbMarkerPanel.rotationSpeed" max="0.1" min="0.01" step="0.001" />
-  <h3>Marker</h3>
-  <input type="radio" v-model="marker" value="/images/hiro.png" />
-  <input type="radio" v-model="marker" value="/images/kanji.png" />
-  <input type="radio" v-model="marker" value="custom" />
-  <input type="file" @change="selectFile" />
+  <div>
+    <h3>Incline</h3>
+    <input type="range" v-model.number="vbMarkerPanel.rotationX" max="1" min="0" step="0.01" />
+  </div>
+  <div>
+    <h3>Rotate</h3>
+    <input type="checkbox" v-model="isRotated" />
+    <button @click="clickReset">Reset</button>
+    <input type="radio" v-model="direction" value="left" />
+    <input type="radio" v-model="direction" value="right" />
+    <input type="range" v-model.number="vbMarkerPanel.rotationSpeed" max="0.1" min="0.01" step="0.001" />
+  </div>
+  <div>
+    <h3>Marker</h3>
+    <input type="radio" v-model="marker" value="/images/hiro.png" />
+    <input type="radio" v-model="marker" value="/images/kanji.png" />
+    <input type="radio" v-model="marker" value="custom" />
+    <input type="file" @change="selectFile" />
+  </div>
   <marker-panel ref="markerPanel" v-bind="vbMarkerPanel" />
 </template>
 
