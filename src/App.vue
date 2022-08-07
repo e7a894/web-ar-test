@@ -6,7 +6,7 @@ const markerPanel = ref<InstanceType<typeof MarkerPanel>>();
 
 let isRotated = ref(false);
 let direction: Ref<'left' | 'right'> = ref('left');
-let marker = ref('/images/hiro.png');
+let marker = ref('./images/hiro.png');
 let customFileUrl = ref('');
 
 const vbMarkerPanel = reactive<MarkerPanelProps>(
@@ -55,8 +55,8 @@ const clickReset = () => {
   </div>
   <div>
     <h3>Marker</h3>
-    <input type="radio" v-model="marker" value="/images/hiro.png" />
-    <input type="radio" v-model="marker" value="/images/kanji.png" />
+    <input type="radio" v-model="marker" value="./images/hiro.png" />
+    <input type="radio" v-model="marker" value="./images/kanji.png" />
     <input type="radio" v-model="marker" value="custom" />
     <input type="file" @change="selectFile" />
   </div>
